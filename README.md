@@ -1,6 +1,6 @@
 ## 😸 DM discord bot `@Bot DM#6773`
 [![discord](https://img.shields.io/badge/discord-v2.2.3-blue)](https://pypi.org/project/discord/)
-[![dotenv](https://img.shields.io/badge/dotenv-v0.0.5-orange)](https://pypi.org/project/dotenv/)
+[![python-decouple](https://img.shields.io/badge/python_decouple-v3.8-orange)](https://pypi.org/project/python-decouple/)
 ### A discord bot for DM-ing users 😼
 
 ![Profile](https://raw.githubusercontent.com/DynoW/botfordms/main/DM_bot_profile.png)
