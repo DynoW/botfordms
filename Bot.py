@@ -28,7 +28,6 @@ async def on_ready():
 
 @bot.command()
 async def msg(ctx, target1, *message1):
-    target2 = await bot.fetch_user(target1.replace("@", "").replace("<", "").replace(">", "").replace("!", ""))
     if ban_check(ctx.author.id) == True:
         await ctx.channel.send("⚠️ You are banned!⚠️")
     elif len(message1) == 0:
@@ -37,23 +36,27 @@ async def msg(ctx, target1, *message1):
         if ctx.author.guild_permissions.administrator:
             for member1 in ctx.guild.members:
                 try:
+                    message = ' '.join(message1)
                     member2 = await bot.fetch_user(member1.id)
-                    await member2.send(str(message1) + " ~ announcement from " + f"""<@{ctx.author.id}>""")
-                    print(f"""<-----announcement----->:{message1} by {ctx.author.id}""")
+                    await member2.send(str(message) + " ~ announcement from " + f"""<@{ctx.author.id}>""")
+                    print(f"""<-----announcement----->:{message} by {ctx.author.id}""")
                     break
                 except:
                     pass
         else:
             await ctx.channel.send("⚠️ You don't have permision to use this command!⚠️")
     else:
-        await target2.send(str(message1) + " ~ DM from " + f'''<@{ctx.author.id}>''')
-        print(str(message1) + " ~ de la " + f'''<@{ctx.author.id}>''')
+        message = ' '.join(message1)
+        target2 = await bot.fetch_user(target1.replace("@", "").replace("<", "").replace(">", "").replace("!", ""))
+        await target2.send(str(message) + " ~ DM from " + f'''<@{ctx.author.id}>''')
+        print(str(message) + " ~ de la " + f'''<@{ctx.author.id}>''')
 
 @bot.command()
-async def report(ctx, target3, *reason):
+async def report(ctx, target3, *reason1):
+    reason = ' '.join(reason1)
     print(
         f"""<-----!report!----->: {target3.replace("@", "").replace("<", "").replace(">", "").replace("!", "")} by {ctx.author.id} for {reason}""")
-    ctx.channel.send("Report sent!")
+    await ctx.channel.send("Report sent!")
 
 @bot.command()
 async def commands(ctx):
