@@ -28,36 +28,26 @@ async def on_ready():
 
 @bot.command()
 async def msg(ctx, target1, *message1):
-    if len(message1) == 0:
+    target2 = await bot.fetch_user(target1.replace("@", "").replace("<", "").replace(">", "").replace("!", ""))
+    if ban_check(ctx.author.id) == True:
+        await ctx.channel.send("⚠️ You are banned!⚠️")
+    elif len(message1) == 0:
         await ctx.channel.send("Use: `!msg [user] [message]`")
-    else:
-        target2 = await bot.fetch_user(target1.replace("@", "").replace("<", "").replace(">", "").replace("!", ""))
-        if ban_check(ctx.author.id) == True:
-            await ctx.channel.send("⚠️ You are banned!⚠️")
-        else:
-            await target2.send(str(message1) + " ~ DM from " + f'''<@{ctx.author.id}>''')
-            print(str(message1) + " ~ de la " + f'''<@{ctx.author.id}>''')
-
-
-@bot.command()
-async def ann(ctx, *message2):
-    if len(message2) == 0:
-        await ctx.channel.send("Use: `!ann [user] [message]`")
-    else:
-        if ban_check(ctx.author.id) == True:
-            await ctx.channel.send("⚠️ You are banned!⚠️")
-        elif ctx.author.guild_permissions.administrator:
+    elif target1 == "all":
+        if ctx.author.guild_permissions.administrator:
             for member1 in ctx.guild.members:
                 try:
                     member2 = await bot.fetch_user(member1.id)
-                    await member2.send(str(message2) + " ~ announcement from " + f"""<@{ctx.author.id}>""")
-                    print(f"""<-----announcement----->:{message2} by {ctx.author.id}""")
+                    await member2.send(str(message1) + " ~ announcement from " + f"""<@{ctx.author.id}>""")
+                    print(f"""<-----announcement----->:{message1} by {ctx.author.id}""")
                     break
                 except:
                     pass
         else:
             await ctx.channel.send("⚠️ You don't have permision to use this command!⚠️")
-
+    else:
+        await target2.send(str(message1) + " ~ DM from " + f'''<@{ctx.author.id}>''')
+        print(str(message1) + " ~ de la " + f'''<@{ctx.author.id}>''')
 
 @bot.command()
 async def report(ctx, target3, *reason):
@@ -67,11 +57,10 @@ async def report(ctx, target3, *reason):
 
 @bot.command()
 async def commands(ctx):
-    embed = discord.Embed(title="Commands", description="for @Bot DM#6773",
-                          color=discord.Color.orange())
-    embed.add_field(name="!msg", value="Send somone a message. example: !msg @DynoW#9056 You are the best!", inline=True)
-    embed.add_field(name="!ann", value="(Admin only) Announce everyone on the server about something. example: !ann Ntza", inline=True)
-    embed.add_field(name="!report", value="Send a report for an user. example: !report @BotDM scam", inline=True)
+    embed = discord.Embed(title="Commands for `@Bot DM#6773`", color=discord.Color.orange())
+    embed.add_field(name="!msg", value="Send somone a message. example: `!msg @DynoW#9056 You are the best!`", inline=False)
+    embed.add_field(name="!msg all", value="(Admin only) Announce everyone on the server about something. example: `!msg all Ntza`", inline=False)
+    embed.add_field(name="!report", value="Send a report for an user. example: `!report @BotDM scam`", inline=False)
     embed.set_footer(text="For help contact: DynoW#9056")
     await ctx.send(embed=embed)
 
