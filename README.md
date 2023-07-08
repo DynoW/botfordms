@@ -13,3 +13,12 @@ Send somone a message. example: `!msg @DynoW#9056 You are the best!`<br>
 Send a report for an user. example: `!report @BotDM scam`<br>
 <br>
 For help contact: DynoW#9056
+
+### How to install:
+Requirements: python3
+Dependencies: discord, dotenv
+> clone repo: `git clone https://github.com/DynoW/botfordms.git`
+
+> intall dependencies: `pip3 install -r requiremts.txt` or manualy install them with `pip3 install [module]`
+
+> Create a .env file (example file: `.env_sample`)
