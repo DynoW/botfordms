@@ -6,9 +6,10 @@
 
 #### Commands:<br>
 !msg<br>
-Send somone a message. example: !msg @DynoW#9056 You are the best!<br>
+Send somone a message. example: `!msg @DynoW#9056 You are the best!`<br>
 !msg all<br>
-(Admin only) Announce everyone on the server about something. example: !msg all Ntza<br>
+(Admin only) Announce everyone on the server about something. example: `!msg all Ntza`<br>
 !report<br>
-Send a report for an user. example: !report @BotDM scam<br>
+Send a report for an user. example: `!report @BotDM scam`<br>
+<br>
 For help contact: DynoW#9056
