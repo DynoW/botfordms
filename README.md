@@ -6,25 +6,27 @@
 ![Profile](https://raw.githubusercontent.com/DynoW/botfordms/main/DM_bot_profile.png)
 
 ### Commands:
-- !msg [@user] [message]<br>
-> Send somone a message. example: !msg @DynoW#9056 You are the best!<br>
+- !msg [user] [message]<br>
+> Send someone a message. example: !msg @DynoW You are the best!<br>
 - !msg all [message]<br>
 > (Admin only) Announce everyone on the server about something. example: !msg all Ntza<br>
 - !msg block [message]<br>
 > (Admin only) Block a user. example: !msg block @BotDM<br>
-- !report [@user] [message]<br>
+- !report [user] [message]<br>
 > Send a report for an user. example: !report @BotDM scam<br>
 
 ### How to install:
 Requirements: python3<br>
-Dependencies: discord, dotenv<br>
+Dependencies: discord, decouple<br>
 
 \> Clone repo: `git clone https://github.com/DynoW/botfordms.git`<br>
 
-\> Intall dependencies: `pip3 install -r requiremts.txt` or manualy install them with `pip3 install [module]`<br>
+\> Intall dependencies: `pip install -r requirements.txt`<br>
 
 \> Create a .env file (example file: `.env_sample`)<br>
 
-\> Run! `python3 bot.py` or `nohup python3 bot.py >> log.txt 2>&1 &` for background use<br>
+\> (Optional) Additionally create a venv: `python3 -m venv venv` and activate: `. venv/bin/activate` (Linux) or `. venv/bin/Activate.ps1` (Windows)
+
+\> Run! `python3 Bot.py` or `nohup python3 Bot.py >> log.txt 2>&1 &` for background use<br>
 
 ### For help contact: DynoW#9056. Enjoy! 🐱

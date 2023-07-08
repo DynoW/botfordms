@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import json
-import os
+from decouple import config
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -79,13 +79,13 @@ async def report(ctx, target3 = None, *reason1):
 @bot.command()
 async def commands(ctx):
     embed = discord.Embed(title="Commands for `@Bot DM#6773`", color=discord.Color.orange())
-    embed.add_field(name="!msg [@user] [message]", value="Send somone a message. example: `!msg @DynoW#9056 You are the best!`", inline=False)
+    embed.add_field(name="!msg [user] [message]", value="Send someone a message. example: `!msg @DynoW#9056 You are the best!`", inline=False)
     embed.add_field(name="!msg all [message]", value="(Admin only) Announce everyone on the server about something. example: `!msg all Ntza`", inline=False)
     embed.add_field(name="!msg block [message]", value="(Admin only) Block a user. example: `!msg block @BotDM`", inline=False)
-    embed.add_field(name="!report [@user] [message]", value="Send a report for an user. example: `!report @BotDM scam`", inline=False)
+    embed.add_field(name="!report [user] [message]", value="Send a report for an user. example: `!report @BotDM scam`", inline=False)
     embed.set_footer(text="For help contact: DynoW#9056")
     await ctx.send(embed=embed)
 
 load_dotenv()
-bot.run(os.environ.get("DM_BOT_TOKEN"))
+bot.run(config("DM_BOT_TOKEN"))
 # https ://discordapp.com/oauth2/authorize?client_id=963110670155513876&scope=bot&permissions=0
