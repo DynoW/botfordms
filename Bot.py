@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
+import os
 
 intents = discord.Intents.default()
 intents.members = True
@@ -58,6 +60,6 @@ async def commands(ctx):
     embed.set_footer(text="For help contact: DynoW#9056")
     await ctx.send(embed=embed)
 
-
-bot.run("OTYzMTEwNjcwMTU1NTEzODc2.YlRUtQ.Z0Asyu6aYL46DQNByR3cYaxwtnk")
+load_dotenv()
+bot.run(os.environ.get("DM_BOT_TOKEN"))
 # https ://discordapp.com/oauth2/authorize?client_id=963110670155513876&scope=bot&permissions=0
