@@ -26,11 +26,13 @@ async def on_ready():
 
 
 @bot.command()
-async def msg(ctx, target1, *message1):
+async def msg(ctx, target1 = None, *message1):
     if ban_check(str(ctx.author.id)) == True:
         await ctx.channel.send("⚠️ You are banned! ⚠️")
+    elif target1 == None:
+        await ctx.channel.send("Use: `!msg [@user] [message]`")
     elif len(message1) == 0:
-        await ctx.channel.send("Use: `!msg [user] [message]`")
+        await ctx.channel.send("Use: `!msg [@user] [message]`")
     elif target1 == "all":
         if ctx.author.guild_permissions.administrator:
             for member1 in ctx.guild.members:
@@ -63,18 +65,24 @@ async def msg(ctx, target1, *message1):
         except:
             await ctx.channel.send("⚠️ ERROR! ⚠️ Use: `!commands`")
 @bot.command()
-async def report(ctx, target3, *reason1):
-    reason = " ".join(reason1)
-    print(
-        f"""<-----!report!----->: {target3.replace("@", "").replace("<", "").replace(">", "").replace("!", "")} by {ctx.author.id} for {reason}""")
-    await ctx.channel.send("Report sent!")
+async def report(ctx, target3 = None, *reason1):
+    if target3 == None:
+        await ctx.channel.send("Use: `!report [@user] [message]`")
+    elif len(reason1) == 0:
+        await ctx.channel.send("Use: `!report [@user] [message]`")
+    else:
+        reason = " ".join(reason1)
+        print(
+            f"""<-----!report!----->: {target3.replace("@", "").replace("<", "").replace(">", "").replace("!", "")} by {ctx.author.id} for: {reason}""")
+        await ctx.channel.send("Report sent!")
 
 @bot.command()
 async def commands(ctx):
     embed = discord.Embed(title="Commands for `@Bot DM#6773`", color=discord.Color.orange())
-    embed.add_field(name="!msg", value="Send somone a message. example: `!msg @DynoW#9056 You are the best!`", inline=False)
-    embed.add_field(name="!msg all", value="(Admin only) Announce everyone on the server about something. example: `!msg all Ntza`", inline=False)
-    embed.add_field(name="!report", value="Send a report for an user. example: `!report @BotDM scam`", inline=False)
+    embed.add_field(name="!msg [@user] [message]", value="Send somone a message. example: `!msg @DynoW#9056 You are the best!`", inline=False)
+    embed.add_field(name="!msg all [message]", value="(Admin only) Announce everyone on the server about something. example: `!msg all Ntza`", inline=False)
+    embed.add_field(name="!msg block [message]", value="(Admin only) Block a user. example: `!msg block @BotDM`", inline=False)
+    embed.add_field(name="!report [@user] [message]", value="Send a report for an user. example: `!report @BotDM scam`", inline=False)
     embed.set_footer(text="For help contact: DynoW#9056")
     await ctx.send(embed=embed)
 

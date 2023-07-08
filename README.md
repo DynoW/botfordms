@@ -1,16 +1,19 @@
 ## 😸 DM discord bot `@Bot DM#6773`
-
+[![discord](https://img.shields.io/badge/discord-v2.2.3-blue)](https://pypi.org/project/discord/)
+[![dotenv](https://img.shields.io/badge/dotenv-v0.0.5-orange)](https://pypi.org/project/dotenv/)
 ### A discord bot for DM-ing users 😼
 
 ![Profile](https://raw.githubusercontent.com/DynoW/botfordms/main/DM_bot_profile.png)
 
-### Commands:<br>
-!msg<br>
-Send somone a message. example: `!msg @DynoW#9056 You are the best!`<br>
-!msg all<br>
-(Admin only) Announce everyone on the server about something. example: `!msg all Ntza`<br>
-!report<br>
-Send a report for an user. example: `!report @BotDM scam`<br>
+### Commands:
+- !msg [@user] [message]<br>
+> Send somone a message. example: !msg @DynoW#9056 You are the best!<br>
+- !msg all [message]<br>
+> (Admin only) Announce everyone on the server about something. example: !msg all Ntza<br>
+- !msg block [message]<br>
+> (Admin only) Block a user. example: !msg block @BotDM<br>
+- !report [@user] [message]<br>
+> Send a report for an user. example: !report @BotDM scam<br>
 
 ### How to install:
 Requirements: python3<br>
