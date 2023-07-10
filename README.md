@@ -17,13 +17,15 @@
 
 ### How to install:
 Requirements: python3<br>
-Dependencies: discord, decouple<br>
+Dependencies: discord, python-decouple<br>
 
 \> Clone repo: `git clone https://github.com/DynoW/botfordms.git`<br>
 
+\> Change directory: `cd botfordms`
+
 \> Intall dependencies: `pip install -r requirements.txt`<br>
 
-\> Create a .env file (example file: `.env_sample`)<br>
+\> Create a .env file (example file: .env_sample): `echo "DM_BOT_TOKEN=YOUR_TOKEN_HERE" > .env`<br>
 
 \> (Optional) Additionally create a venv: `python3 -m venv venv` and activate: `. venv/bin/activate` (Linux) or `. venv/bin/Activate.ps1` (Windows)
 

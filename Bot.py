@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from dotenv import load_dotenv
 import json
 from decouple import config
 
@@ -86,6 +85,5 @@ async def commands(ctx):
     embed.set_footer(text="For help contact: DynoW#9056")
     await ctx.send(embed=embed)
 
-load_dotenv()
 bot.run(config("DM_BOT_TOKEN"))
 # https ://discordapp.com/oauth2/authorize?client_id=963110670155513876&scope=bot&permissions=0
