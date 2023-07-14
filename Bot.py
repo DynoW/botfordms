@@ -5,7 +5,7 @@ import re
 from decouple import config
 
 
-# Set-up discord bot
+# Sets-up the discord bot
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
@@ -36,7 +36,7 @@ def get_uid(data):
         return None
 
 
-# Set the bot presence
+# Sets the bot presence
 @bot.event
 async def on_ready():
     await bot.change_presence(
@@ -52,11 +52,11 @@ async def msg(ctx, target1=None, *message1):
     if ban_check(str(ctx.author.id)) == True:
         await ctx.channel.send("⚠️ You are banned! ⚠️")
 
-    # Check if target is empty
+    # Checks if target is empty
     elif target1 == None:
         await ctx.channel.send("Use: `!msg [@user] [message]`")
 
-    # Check if message is empty
+    # Checks if message is empty
     elif len(message1) == 0:
         await ctx.channel.send("Use: `!msg [@user] [message]`")
 
@@ -88,7 +88,7 @@ async def msg(ctx, target1=None, *message1):
     elif target1 == "block" or target1 == "ban":
         # Checks if user of command has admin privileges on the server
         if ctx.author.guild_permissions.administrator:
-            # Check the user id
+            # Checks the user id
             ban_target = message1[0]
             if get_uid(ban_target) != None:
                 # Adds the user id to BanList.json
@@ -116,13 +116,13 @@ async def msg(ctx, target1=None, *message1):
 # The report command
 @bot.command()
 async def report(ctx, target3=None, *reason1):
-    # Check the arguments
+    # Checks the arguments
     if target3 == None:
         await ctx.channel.send("Use: `!report [@user] [message]`")
     elif len(reason1) == 0:
         await ctx.channel.send("Use: `!report [@user] [message]`")
     else:
-        # Send report
+        # Sends report
         reason = " ".join(reason1)
         print(
             f"""<-----!report!----->: {get_uid(target3)} by {ctx.author.id} for: {reason}"""
