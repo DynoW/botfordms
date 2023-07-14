@@ -13,9 +13,9 @@ bot = commands.Bot(
 )
 
 
+# Function for checking if an user is banned from using a bot
+# (for unban just delete the entry in BanList.json)
 def ban_check(data):
-    # Function for checking if an user is banned from using a bot
-    # (for unban just delete the entry in BanList.json)
     with open("BanList.json", "r") as ban_file:
         list = json.load(ban_file)
         for banned in list["bans"]:
@@ -23,6 +23,12 @@ def ban_check(data):
                 return True
             else:
                 return False
+
+
+# Function for replacing symbols in user id
+def get_uid(data):
+    uid = data.replace("@", "").replace("<", "").replace(">", "").replace("!", "")
+    return uid
 
 
 # Set the bot presence
@@ -78,13 +84,7 @@ async def msg(ctx, target1=None, *message1):
         # Checks if user of command has admin privileges on the server
         if ctx.author.guild_permissions.administrator:
             # Adds the user id to BanList.json
-            message2 = (
-                message1[0]
-                .replace("@", "")
-                .replace("<", "")
-                .replace(">", "")
-                .replace("!", "")
-            )
+            message2 = message1[0]
             with open("BanList.json", "r") as ban_file:
                 list = json.load(ban_file)
             list["bans"] = list["bans"] + [{"Id": message2}]
@@ -98,12 +98,7 @@ async def msg(ctx, target1=None, *message1):
         # The command for sending a DM
         try:
             message = " ".join(message1)
-            target2 = await bot.fetch_user(
-                target1.replace("@", "")
-                .replace("<", "")
-                .replace(">", "")
-                .replace("!", "")
-            )
+            target2 = await bot.fetch_user(get_uid(target1))
             await target2.send(str(message) + " ~ DM from " + f"""<@{ctx.author.id}>""")
             print(str(message) + " ~ de la " + f"""<@{ctx.author.id}>""")
         except:
@@ -122,7 +117,7 @@ async def report(ctx, target3=None, *reason1):
         # Send report
         reason = " ".join(reason1)
         print(
-            f"""<-----!report!----->: {target3.replace("@", "").replace("<", "").replace(">", "").replace("!", "")} by {ctx.author.id} for: {reason}"""
+            f"""<-----!report!----->: {get_uid(target3)} by {ctx.author.id} for: {reason}"""
         )
         await ctx.channel.send("Report sent!")
 
