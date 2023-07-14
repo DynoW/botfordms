@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import json
+import re
 from decouple import config
 
 
@@ -27,8 +28,12 @@ def ban_check(data):
 
 # Function for replacing symbols in user id
 def get_uid(data):
-    uid = data.replace("@", "").replace("<", "").replace(">", "").replace("!", "")
-    return uid
+    pattern = r"<@(.*?)>"
+    matches = re.search(pattern, data)
+    if matches:
+        return matches.group(1)
+    else:
+        return None
 
 
 # Set the bot presence
@@ -83,13 +88,16 @@ async def msg(ctx, target1=None, *message1):
     elif target1 == "block" or target1 == "ban":
         # Checks if user of command has admin privileges on the server
         if ctx.author.guild_permissions.administrator:
-            # Adds the user id to BanList.json
-            message2 = message1[0]
-            with open("BanList.json", "r") as ban_file:
-                list = json.load(ban_file)
-            list["bans"] = list["bans"] + [{"Id": message2}]
-            with open("BanList.json", "w") as ban_file:
-                json.dump(list, ban_file)
+            # Check the user id
+            ban_target = message1[0]
+            if get_uid(ban_target) != None:
+                # Adds the user id to BanList.json
+                with open("BanList.json", "r") as ban_file:
+                    list = json.load(ban_file)
+                list["bans"] = list["bans"] + [{"Id": ban_target}]
+                with open("BanList.json", "w") as ban_file:
+                    json.dump(list, ban_file)
+                print(f"""<-----!report!----->: {ban_target} was blocked!""")
         else:
             await ctx.channel.send(
                 "⚠️ You don't have permision to use this command! ⚠️"
