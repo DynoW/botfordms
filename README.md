@@ -1,9 +1,9 @@
-## 😸 DM discord bot `@Bot DM#6773`
+![image](https://github.com/DynoW/botfordms/assets/104089032/96a66105-92d2-4a90-b1fc-37d191bfd59c)## 😸 DM discord bot `@Bot DM#6773`
 [![discord](https://img.shields.io/badge/discord-v2.2.3-blue)](https://pypi.org/project/discord/)
 [![python-decouple](https://img.shields.io/badge/python_decouple-v3.8-orange)](https://pypi.org/project/python-decouple/)
 ### A discord bot for DM-ing users 😼
 
-![Profile](https://raw.githubusercontent.com/DynoW/botfordms/main/DM_bot_profile.png)
+![Profile](https://raw.githubusercontent.com/DynoW/images/main/DM_bot_profile.png?token=GHSAT0AAAAAAB5PN6CTF26LOKSNNTN3SUNGZGIWTNQ)
 
 ### Commands:
 - !msg [user] [message]<br>
