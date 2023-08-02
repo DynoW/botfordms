@@ -3,7 +3,7 @@
 [![python-decouple](https://img.shields.io/badge/python_decouple-v3.8-orange)](https://pypi.org/project/python-decouple/)
 ### A discord bot for DM-ing users 😼
 
-![Profile](https://raw.githubusercontent.com/DynoW/images/main/DM_bot_profile.png?token=GHSAT0AAAAAAB5PN6CS2KML2MJ2CEPUDI64ZGKC3LA)
+![Profile](https://raw.githubusercontent.com/DynoW/images/main/DM_bot_profile.png)
 
 ### Commands:
 - !msg [user] [message]<br>
