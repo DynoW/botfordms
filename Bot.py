@@ -17,7 +17,7 @@ bot = commands.Bot(
 # Function for checking if an user is banned from using a bot
 # (for unban just delete the entry in BanList.json)
 def ban_check(data):
-    with open("BanList.json", "r") as ban_file:
+    with open("ban-list.json", "r") as ban_file:
         list = json.load(ban_file)
         for banned in list["bans"]:
             if banned["Id"] == data:
