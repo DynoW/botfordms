@@ -8,12 +8,8 @@
 ### Commands:
 - !msg [user] [message]<br>
 > Send someone a message. example: !msg @DynoW You are the best!<br>
-- !msg all [message]<br>
+- !msg @Bot DM [message]<br>
 > (Admin only) Announce everyone on the server about something. example: !msg all Ntza<br>
-- !msg block [message]<br>
-> (Admin only) Block a user. example: !msg block @BotDM<br>
-- !report [user] [message]<br>
-> Send a report for an user. example: !report @BotDM scam<br>
 
 ### How to install:
 Requirements: python3<br>
