@@ -6,9 +6,9 @@
 ![Profile](https://raw.githubusercontent.com/DynoW/images/main/DM_bot_profile.png)
 
 ### Commands:
-- !msg [user] [message]<br>
+- /msg [user] [message]<br>
 > Send someone a message. example: !msg @DynoW You are the best!<br>
-- !msg @Bot DM [message]<br>
+- /msg @Bot DM [message]<br>
 > (Admin only) Announce everyone on the server about something. example: !msg all Ntza<br>
 
 ### How to install:
