@@ -1,7 +1,5 @@
 import discord
 from discord.ext import commands
-import json
-import re
 from decouple import config
 
 
@@ -14,150 +12,76 @@ bot = commands.Bot(
 )
 
 
-# Function for checking if an user is banned from using a bot
-# (for unban just delete the entry in BanList.json)
-def ban_check(data):
-    with open("ban-list.json", "r") as ban_file:
-        list = json.load(ban_file)
-        for banned in list["bans"]:
-            if banned["Id"] == data:
-                return True
-            else:
-                return False
-
-
-# Function for replacing symbols in user id
-def get_uid(data):
-    pattern = r"<@(.*?)>"
-    matches = re.search(pattern, data)
-    if matches:
-        return matches.group(1)
-    else:
-        return None
-
-
 # Sets the bot presence
 @bot.event
 async def on_ready():
     await bot.change_presence(
         status=discord.Status.online, activity=discord.Game(name="!commands")
     )
+    await bot.tree.sync()
     print("Bot is online")
 
 
 # The command msg
-@bot.command()
-async def msg(ctx, target1=None, *message1):
-    # Check if user is banned with the function ban_check()
-    if ban_check(str(ctx.author.id)) == True:
-        await ctx.channel.send("⚠️ You are banned! ⚠️")
-
-    # Checks if target is empty
-    elif target1 == None:
-        await ctx.channel.send("Use: `!msg [@user] [message]`")
-
-    # Checks if message is empty
-    elif len(message1) == 0:
-        await ctx.channel.send("Use: `!msg [@user] [message]`")
-
+@bot.tree.command(name='msg', description='Send a message to a user')
+async def msg(interaction: discord.Interaction, user: discord.User, *, message: str):
+    # # Ensure the user is not a bot
+    # if user.bot:
+    #     await interaction.response.send_message("You cannot send messages to bots.")
+    #     return
+    
     # The command for announcing something for all server
-    elif target1 == "all":
+    if user.bot:
         # Checks if user of command has admin privileges on the server
-        if ctx.author.guild_permissions.administrator:
+        if interaction.user.guild_permissions.administrator:
             # Loops for member in server
-            for member1 in ctx.guild.members:
+            m_count=0
+            u_count=""
+            for member in interaction.guild.members:
                 # Tries to send a message
                 try:
-                    message = " ".join(message1)
-                    member2 = await bot.fetch_user(member1.id)
-                    await member2.send(
-                        str(message)
-                        + " ~ announcement from "
-                        + f"""<@{ctx.author.id}>"""
-                    )
-                    print(f"""<-----announcement----->:{message} by {ctx.author.id}""")
-                    break
+                    await member.send(message+ " ~ announcement from "
+                        + f"""<@{interaction.user.id}>""")
+                    m_count+=1
+                    u_count=u_count+member.name+" "
                 except:
                     pass
+            await interaction.response.send_message(f"Sent announcement to {str(m_count)} users.")
+            print(f"""<-----announcement----->:"{message}" by {interaction.user.id}""")
+            print("Users: " + u_count + "\n" + "User count: " + str(m_count))
         else:
-            await ctx.channel.send(
-                "⚠️ You don't have permision to use this command! ⚠️"
-            )
-
-    # The command for banning someone
-    elif target1 == "block" or target1 == "ban":
-        # Checks if user of command has admin privileges on the server
-        if ctx.author.guild_permissions.administrator:
-            # Checks the user id
-            ban_target = message1[0]
-            if get_uid(ban_target) != None:
-                # Adds the user id to BanList.json
-                with open("BanList.json", "r") as ban_file:
-                    list = json.load(ban_file)
-                list["bans"] = list["bans"] + [{"Id": ban_target}]
-                with open("BanList.json", "w") as ban_file:
-                    json.dump(list, ban_file)
-                print(f"""<-----!report!----->: {ban_target} was blocked!""")
-        else:
-            await ctx.channel.send(
+            await interaction.response.send_message(
                 "⚠️ You don't have permision to use this command! ⚠️"
             )
     else:
         # The command for sending a DM
         try:
-            message = " ".join(message1)
-            target2 = await bot.fetch_user(get_uid(target1))
-            await target2.send(str(message) + " ~ DM from " + f"""<@{ctx.author.id}>""")
-            print(str(message) + " ~ de la " + f"""<@{ctx.author.id}>""")
-        except:
-            await ctx.channel.send("⚠️ ERROR! ⚠️ Can't send message to user!")
-
-
-# The report command
-@bot.command()
-async def report(ctx, target3=None, *reason1):
-    # Checks the arguments
-    if target3 == None:
-        await ctx.channel.send("Use: `!report [@user] [message]`")
-    elif len(reason1) == 0:
-        await ctx.channel.send("Use: `!report [@user] [message]`")
-    else:
-        # Sends report
-        reason = " ".join(reason1)
-        print(
-            f"""<-----!report!----->: {get_uid(target3)} by {ctx.author.id} for: {reason}"""
-        )
-        await ctx.channel.send("Report sent!")
+            await user.send(message + " ~ DM from " + f"""<@{interaction.user.id}>""")
+            print(str(message) + " ~ from " + f"""{interaction.user}({interaction.user.id})""" + " to " + f"""{user}({user.id})""")
+            await interaction.response.send_message(f"Message sent to <@{user.id}>: {message}")
+        except discord.errors.HTTPException:
+            await interaction.response.send_message("Failed to send the message. Please check the user's privacy settings.")
+            
 
 
 # The commands of the bot
-@bot.command()
-async def commands(ctx):
+@bot.tree.command(name='help', description='Show commands for Bot DM')
+async def help(interaction: discord.Interaction):
     embed = discord.Embed(
         title="Commands for **@Bot DM#6773**", color=discord.Color.orange()
     )
     embed.add_field(
-        name="**!msg [user] [message]**",
-        value="> Send someone a message.\nexample: `!msg @DynoW#9056 You are the best!`",
+        name="**/msg [user] [message]**",
+        value="> Send someone a message.\n> example: `!msg @DynoW#9056 You are the best!`",
         inline=False,
     )
     embed.add_field(
-        name="**!msg all [message]**",
-        value="> (Admin only) Announce everyone on the server about something.\nexample: `!msg all Ntza`",
-        inline=False,
-    )
-    embed.add_field(
-        name="**!msg block [message]**",
-        value="> (Admin only) Block a user.\nexample: `!msg block @BotDM`",
-        inline=False,
-    )
-    embed.add_field(
-        name="**!report [user] [message]**",
-        value="> Send a report for an user.\nexample: `!report @BotDM scam`",
+        name="**/msg @Bot DM [message]**",
+        value="> (Admin only) Announce everyone on the server about something.\n> example: `!msg all Ntza`",
         inline=False,
     )
     embed.set_footer(text="For help contact: DynoW#9056")
-    await ctx.send(embed=embed)
+    await interaction.response.send_message(embed=embed)
 
 
 bot.run(config("DM_BOT_TOKEN"))
